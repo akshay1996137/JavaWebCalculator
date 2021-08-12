@@ -27,6 +27,7 @@ pipeline {
             steps {
                 echo 'package'
                 sh 'mvn package'
+           }
         }
         stage('maven deploy') {
             steps {
@@ -34,5 +35,6 @@ pipeline {
                 sh 'mvn deploy'
         }
     }
+
 }
  
