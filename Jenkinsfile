@@ -5,7 +5,7 @@ pipeline {
         stage('mvn-compile') {
             steps {
                 echo 'Building..'
-                sh 'maven compile'
+                sh 'mvn compile'
             }
         }
         stage('Test') {
