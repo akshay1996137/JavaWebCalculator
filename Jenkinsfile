@@ -33,8 +33,8 @@ pipeline {
             steps {
                 echo 'deploy'
                 sh 'mvn deploy'
+           }
         }
-    }
 
-}
+     }
  
