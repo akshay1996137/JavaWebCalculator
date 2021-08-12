@@ -19,8 +19,8 @@ pipeline {
             steps {
                 echo 'sonar-test....'
                 sh 'mvn sonar:sonar \
-  -Dsonar.host.url=http://54.64.225.199:9000 \
-  -Dsonar.login=7a6deacccebb5f380dc27fc3008d0349cad1872c'
+  -Dsonar.host.url=http://54.178.172.90:9000 \
+  -Dsonar.login=22e627b7928fa3d4b2a7f2f7759d3d3bfe390d2b'
             }
         }
     }
