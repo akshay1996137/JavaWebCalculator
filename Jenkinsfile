@@ -1,29 +1,47 @@
 pipeline {
+    environment { 
+        registry = "ravi2krishna/devops-proj" 
+        registryCredential = 'docker-hub' 
+        dockerImage = '' 
+    }
     agent any
 
     stages {
-        stage('mvn-compile') {
+        
+        stage('Build Image') {
             steps {
-                echo 'compile..'
-                sh 'mvn compile'
+                echo 'Building Docker Image'
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
-        stage('maven test') {
+        
+        stage('Deploy Image') {
             steps {
-                echo 'Testing..'
-                sh 'mvn test'                
-
+                echo 'Pushing Docker Image'
+                script {
+                   docker.withRegistry( '', registryCredential ) {
+                   dockerImage.push("$BUILD_NUMBER")
+                   dockerImage.push('latest')
+                  }
+                }
             }
         }
-        stage('sonar test') {
+        
+        stage('Clean Up') {
             steps {
-                echo 'sonar-test....'
-                sh 'mvn sonar:sonar \
-  -Dsonar.host.url=http://54.178.172.90:9000 \
-  -Dsonar.login=22e627b7928fa3d4b2a7f2f7759d3d3bfe390d2b'
+                sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi $registry:latest"
             }
         }
-
-
-     }
- 
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+                sh "kubectl apply -f deployment.yaml"
+                sh "kubectl apply -f service.yaml"
+                sh "kubectl rollout restart deployment.apps/calc-deployment"
+            }
+        }
+    }
+}
