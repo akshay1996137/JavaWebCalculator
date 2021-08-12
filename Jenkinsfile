@@ -23,18 +23,7 @@ pipeline {
   -Dsonar.login=22e627b7928fa3d4b2a7f2f7759d3d3bfe390d2b'
             }
         }
-        stage('maven package') {
-            steps {
-                echo 'package'
-                sh 'mvn package'
-           }
-        }
-        stage('maven deploy') {
-            steps {
-                echo 'deploy'
-                sh 'mvn deploy'
-           }
-        }
+
 
      }
  
