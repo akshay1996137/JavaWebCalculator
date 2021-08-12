@@ -1,6 +1,6 @@
 pipeline {
     environment { 
-        registry = "ravi2krishna/devops-proj" 
+        registry = "kat10/devops-proj" 
         registryCredential = 'docker-hub' 
         dockerImage = '' 
     }
@@ -29,19 +29,6 @@ pipeline {
             }
         }
         
-        stage('Clean Up') {
-            steps {
-                sh "docker rmi $registry:$BUILD_NUMBER"
-                sh "docker rmi $registry:latest"
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                sh "kubectl apply -f deployment.yaml"
-                sh "kubectl apply -f service.yaml"
-                sh "kubectl rollout restart deployment.apps/calc-deployment"
-            }
-        }
+
     }
 }
