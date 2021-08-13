@@ -10,8 +10,8 @@ pipeline {
         }
         stage('docker push') {
             steps {
-                withCredentials([usernameColonPassword(credentialsId: 'dockerpush', variable: 'dockerpass')]) {
-               sh "sudo docker login -u kat10 -p ${dockerpass}"
+                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
+                sh "sudo docker login -u kat10 -p ${dockerhubpwd}"
                }
                 sh 'sudo docker push kat10/proj'
             }
