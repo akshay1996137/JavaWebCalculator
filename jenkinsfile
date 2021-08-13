@@ -1,0 +1,14 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('docker image') {
+            steps {
+                echo 'build image'
+                sh 'sudo docker build -t kat10/proj .'
+            }
+        }
+        
+    }
+}
+
