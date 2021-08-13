@@ -14,6 +14,14 @@ pipeline {
                 sh 'sudo docker run -dt --name app -p 8082:8080 kat10/proj'
             }
         }
+        stage('docker push') {
+            steps {
+                withCredentials([file(credentialsId: '', variable: 'dockerpass')]) {
+            sh "docker login -u kat10 -p ${dockerpass}"
+               }
+                sh 'sudo docker push kat10/proj'
+            }
+        }
 
         
     }
