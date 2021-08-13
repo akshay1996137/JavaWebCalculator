@@ -8,12 +8,6 @@ pipeline {
                 sh 'sudo docker build -t kat10/proj .'
             }
         }
-        stage('docker run') {
-            steps {
-                echo 'run image'
-                sh 'sudo docker run -dt --name app -p 8082:8080 kat10/proj'
-            }
-        }
         stage('docker push') {
             steps {
                 withCredentials([file(credentialsId: '', variable: 'dockerpass')]) {
