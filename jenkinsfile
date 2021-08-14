@@ -5,15 +5,15 @@ pipeline {
         stage('docker image') {
             steps {
                 echo 'build image'
-                sh 'sudo docker build -t kat10/proj .'
+                sh 'sudo docker build -t kat10/pro .'
             }
         }
         stage('docker push') {
             steps {
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerhubpwd')]) {
-                sh "sudo docker login -u kat10 -p ${dockerhubpwd}"
+                withCredentials([string(credentialsId: 'DOCKER', variable: 'PASS')]) {
+                sh "sudo docker login -u kat10 -p ${PASS}"
                }
-                sh 'sudo docker push kat10/proj'
+                sh 'sudo docker push kat10/pro'
             }
         }
 
